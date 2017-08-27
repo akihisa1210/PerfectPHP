@@ -1,0 +1,14 @@
+{
+    "name": "ak/sample-fw",
+    "autoload": {
+        "psr-4": {
+           "src\\application\\": "src/application"
+        }
+    },
+    "require": {
+    },
+    "require-dev": {
+        "phpunit/phpunit": "6.3.*",
+        "phake/phake": "2.*"
+    }
+}
