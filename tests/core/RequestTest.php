@@ -113,4 +113,34 @@ class RequestTest extends TestCase
         $this->target = new Request(['hoge' => 'huga'], null, null);
         $this->assertNull($this->target->getRequestUri());
     }
+
+    public function testGetBaseUrReturnBaseUrlWhenFrontControllerIsContained()
+    {
+        $this->target = new Request(['REQUEST_URI' => '/foo/bar/index.php/list', 'SCRIPT_NAME' => '/foo/bar/index.php']);
+        $this->assertEquals('/foo/bar/index.php', $this->target->getBaseUrl());
+    }
+
+    public function testGetBaseUrlReturnBaseUrlWithoutFrontControllerWhenFCIsNotContained()
+    {
+        $this->target = new Request(['REQUEST_URI' => '/foo/bar/list', 'SCRIPT_NAME' => '/foo/bar/index.php']);
+        $this->assertEquals('/foo/bar', $this->target->getBaseUrl());
+    }
+
+    public function testGetPathInfoReturnPathInfo()
+    {
+        $this->target = new Request(['REQUEST_URI' => '/foo/bar/index.php/list', 'SCRIPT_NAME' => '/foo/bar/index.php']);
+        $this->assertEquals('/list', $this->target->getPathInfo());
+    }
+
+    public function testGetPathInfoReturnPathInfoWhenFCIsNotContained()
+    {
+        $this->target = new Request(['REQUEST_URI' => '/foo/bar/list', 'SCRIPT_NAME' => '/foo/bar/index.php']);
+        $this->assertEquals('/list', $this->target->getPathInfo());
+    }
+
+    public function testGetPathInfoReturnPathInfoWhenUrlParamExist()
+    {
+        $this->target = new Request(['REQUEST_URI' => '/foo/bar/index.php/list?hoge=fuga', 'SCRIPT_NAME' => '/foo/bar/index.php']);
+        $this->assertEquals('/list', $this->target->getPathInfo());
+    }
 }
