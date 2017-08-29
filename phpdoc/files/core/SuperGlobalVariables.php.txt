@@ -1,0 +1,50 @@
+<?php
+
+namespace src\application\core;
+
+abstract class SuperGlobalVariables
+{
+    protected $values;
+
+    public function __construct($variable = null)
+    {
+        if ($variable !== null) {
+            $this->setValues($variable);
+        } else {
+            $this->setValues();
+        }
+    }
+
+    abstract protected function setValues();
+
+    public function getValues()
+    {
+        return $this->values;
+    }
+
+    public function getValue($key)
+    {
+        $value = null;
+
+        if (is_null($key)) {
+            throw new Exception('$key is null');
+        }
+
+        if ($this->has($key)) {
+            $value = $this->values[$key];
+        }
+
+        return $value;
+    }
+
+
+    public function has($key)
+    {
+        if (!array_key_exists($key, $this->values)) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
