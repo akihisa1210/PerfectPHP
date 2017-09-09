@@ -2,7 +2,7 @@
 
 namespace src\application\core;
 
-use PHPunit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
 {
